@@ -1,18 +1,16 @@
-import {React,useState} from "react";
-import {BrowserRouter,Route,Link} from "react-router-dom";
+import { React } from "react";
+import { BrowserRouter, Route, Link } from "react-router-dom";
 import DailyPlanComponent from "./Components/DailyPlanComponent";
-import ChoosingPlanComponent from "./Components/ChoosingPlanComponent";
+import CreatingPlanComponent from "./Components/CreatingPlanComponent";
 import HeaderComponent from "./Components/HeaderComponent";
 
-
 function App() {
-  
   return (
     <>
-      <HeaderComponent/>
+      <HeaderComponent />
       <BrowserRouter>
-         <Route path="/" exact component={ChoosingPlanComponent}/>
-         <Route path="/create/daily" component={DailyPlanComponent}/>
+        <Route path="/" exact component={CreatingPlanComponent} />
+        <Route path="/create/daily" component={DailyPlanComponent} />
       </BrowserRouter>
     </>
   );

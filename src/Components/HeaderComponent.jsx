@@ -1,5 +1,6 @@
 import React from "react";
 import logo from "../images/logo.png";
+import Image from "react-bootstrap/Image";
 import "../css/style.css";
 
 function HeaderComponent() {
@@ -9,13 +10,13 @@ function HeaderComponent() {
       <div className="container-fluid main-bar">
         <div className="row">
           <div className="col-md-4 col-4 text-right">
-            <img src={logo} width={70} height={70} />
+            <Image src={logo} style={{ height: "auto", width: "25%" }} />
           </div>
           <div className="col-md-4 col-4 text-center">
-            <p className="main-text">Life RoadMap</p>
+            <h1 className="main-text">Life RoadMap</h1>
           </div>
           <div className="col-md-4 col-4">
-            <img src={logo} width={70} height={70} />
+            <Image src={logo} style={{ height: "auto", width: "25%" }} />
           </div>
         </div>
       </div>

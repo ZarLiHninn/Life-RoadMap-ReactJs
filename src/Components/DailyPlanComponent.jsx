@@ -1,12 +1,12 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import work from "../images/work.png";
 import study from "../images/study.png";
 import meeting from "../images/meeting.png";
 import activities from "../images/activities.png";
 import "../css/style.css";
 import { Link } from "react-router-dom";
-import DatePicker from "react-datepicker";
-import TimePicker from "rc-time-picker";
+import DatePicker from "react-date-picker";
+import TimePicker from "react-time-picker";
 import "rc-time-picker/assets/index.css";
 import Moment from "react-moment";
 import Pdf from "react-to-pdf";
@@ -48,17 +48,22 @@ function DailyPlanComponent() {
     goal: "",
   });
   const [dailyPlan, setDailyPlan] = useState([]);
-  const [lgShow, setLgShow] = useState(false);
+  const [previewShow, setPreviewShow] = useState(false);
+  const [confirmBoxShow, setConfirmBoxShow] = useState(false);
 
-  const handleClose = () => setLgShow(false);
+  const handlePreviewClose = () => setPreviewShow(false);
+
+  const handleConfirmBoxClose = () => setConfirmBoxShow(false);
+
   const changeDate = (dateValue) => {
     setInputPlan({ ...inputPlan, taskDate: dateValue });
   };
+
   const changeStartTime = (startTimeValue) => {
-    setInputPlan({ ...inputPlan, taskStartTime: startTimeValue.format("LT") });
+    setInputPlan({ ...inputPlan, taskStartTime: startTimeValue });
   };
   const changeEndTime = (endTimeValue) => {
-    setInputPlan({ ...inputPlan, taskEndTime: endTimeValue.format("LT") });
+    setInputPlan({ ...inputPlan, taskEndTime: endTimeValue });
   };
   const changeInputPlan = (evt) => {
     const name = evt.target.name;
@@ -101,26 +106,26 @@ function DailyPlanComponent() {
   return (
     <>
       {/* daily-plan */}
-      <div className="container plan">
+      <div className="container daily-plan">
         <div className="row">
-          <div className="col-md-4 col-4">
+          <div className="col-lg-4 col-md-4 col-4">
             <button
-              style={{ marginLeft: 20 }}
-              className="btn"
-              onClick={() => setLgShow(true)}
+              className="btn back-btn"
+              onClick={() => setConfirmBoxShow(true)}
+            >
+              Back
+            </button>
+          </div>
+          <div className="col-lg-4 col-md-4 col-3 daily-text">
+            <p>Daily</p>
+          </div>
+          <div className="col-lg-4 col-md-4 col-5 text-right">
+            <button
+              className="btn preview-btn"
+              onClick={() => setPreviewShow(true)}
             >
               Preview
             </button>
-          </div>
-          <div className="col-md-4 col-4 daily-monthly-text">
-            <p>Daily</p>
-          </div>
-          <div className="col-md-4 col-4 text-right">
-            <Link to="/">
-              <button style={{ marginRight: 20 }} className="btn">
-                Back
-              </button>
-            </Link>
           </div>
         </div>
         <div className="form">
@@ -152,48 +157,41 @@ function DailyPlanComponent() {
               </Form.Control>
             </Form.Group>
             <Form.Row>
-              <Col md={6} sm={12} xs={12}>
+              <Col lg={6} md={4} sm={12} xs={12}>
                 <Form.Group controlId="task-date">
                   <Form.Label>Date</Form.Label>
                   <div>
                     <DatePicker
-                      name="task-date"
-                      selected={inputPlan.taskDate}
                       onChange={changeDate}
+                      value={inputPlan.taskDate}
+                      format="y-MM-dd"
                       required
-                      placeholderText="Select Task Date"
                     />
                   </div>
                 </Form.Group>
               </Col>
 
-              <Col md={3} sm={12} xs={12}>
+              <Col lg={3} md={4} sm={12} xs={12}>
                 <Form.Group controlId="task-startTime">
                   <Form.Label>Start Time</Form.Label>
                   <div>
                     <TimePicker
-                      placeholder="Select Time"
-                      use12Hours
-                      showSecond={false}
-                      focusOnOpen={true}
-                      format="hh:mm A"
                       onChange={changeStartTime}
+                      value={inputPlan.taskStartTime}
+                      format="h:m a"
                       required
                     />
                   </div>
                 </Form.Group>
               </Col>
-              <Col md={3} sm={12} xs={12}>
+              <Col lg={3} md={4} sm={12} xs={12}>
                 <Form.Group controlId="task-endTime">
                   <Form.Label>End Time</Form.Label>
                   <div>
                     <TimePicker
-                      placeholder="Select Time"
-                      use12Hours
-                      showSecond={false}
-                      focusOnOpen={true}
-                      format="hh:mm A"
                       onChange={changeEndTime}
+                      value={inputPlan.taskEndTime}
+                      format="h:m a"
                       required
                     />
                   </div>
@@ -222,8 +220,8 @@ function DailyPlanComponent() {
       {/* Preview Modal Box */}
       <Modal
         size="lg"
-        show={lgShow}
-        onHide={() => setLgShow(false)}
+        show={previewShow}
+        onHide={() => setPreviewShow(false)}
         aria-labelledby="example-modal-sizes-title-lg"
       >
         <Modal.Header closeButton>
@@ -243,74 +241,90 @@ function DailyPlanComponent() {
                 {dailyPlan.map((i) => {
                   return (
                     <>
-                      <Col xs={12} md={4}>
+                      <Col md={6} lg={4}>
                         <div className="planOutput" key={i.id}>
                           {i.type === "Work" && (
-                            <div className="planOutputTitle">
-                              <img
-                                src={work}
-                                width={30}
-                                height={30}
-                                style={{ float: "left" }}
-                              />
-                              <h4>{i.taskName}</h4>
-                              <button
-                                className="trash-btn textRight"
-                                onClick={() => deleteTask(i)}
-                              >
-                                <i className="fa fa-trash-o"></i>
-                              </button>
+                            <div className="container planOutputTitle">
+                              <div className="row">
+                                <div className="col-lg-2 col-md-2 col-sm-2 col-2">
+                                  <img src={work} width={30} height={30} />
+                                </div>
+                                <div className="col-md-6 col-md-6 col-sm-6 col-6 text-left">
+                                  <h4>{i.taskName}</h4>
+                                </div>
+                                <div className="col-md-4 col-md-4 col-sm-4 col-4 text-right">
+                                  <button
+                                    className="trash-btn"
+                                    onClick={() => deleteTask(i)}
+                                  >
+                                    <i className="fa fa-trash-o"></i>
+                                  </button>
+                                </div>
+                              </div>
                             </div>
                           )}
                           {i.type === "Other Activities" && (
-                            <div className="planOutputTitle">
-                              <img
-                                src={activities}
-                                width={30}
-                                height={30}
-                                style={{ float: "left" }}
-                              />
-                              <h4>{i.taskName}</h4>
-                              <button
-                                className="trash-btn textRight"
-                                onClick={() => deleteTask(i)}
-                              >
-                                <i className="fa fa-trash-o"></i>
-                              </button>
+                            <div className="container planOutputTitle">
+                              <div className="row">
+                                <div className="col-lg-2 col-md-2 col-sm-2 col-2">
+                                  <img
+                                    src={activities}
+                                    width={30}
+                                    height={30}
+                                  />
+                                </div>
+                                <div className="col-md-6 col-md-6 col-sm-6 col-6 text-left">
+                                  <h4>{i.taskName}</h4>
+                                </div>
+                                <div className="col-md-4 col-md-4 col-sm-4 col-4 text-right">
+                                  <button
+                                    className="trash-btn"
+                                    onClick={() => deleteTask(i)}
+                                  >
+                                    <i className="fa fa-trash-o"></i>
+                                  </button>
+                                </div>
+                              </div>
                             </div>
                           )}
                           {i.type === "Meeting" && (
-                            <div className="planOutputTitle">
-                              <img
-                                src={meeting}
-                                width={30}
-                                height={30}
-                                style={{ float: "left" }}
-                              />
-                              <h4>{i.taskName}</h4>
-                              <button
-                                className="trash-btn textRight"
-                                onClick={() => deleteTask(i)}
-                              >
-                                <i className="fa fa-trash-o"></i>
-                              </button>
+                            <div className="container planOutputTitle">
+                              <div className="row">
+                                <div className="col-lg-2 col-md-2 col-sm-2 col-2">
+                                  <img src={meeting} width={30} height={30} />
+                                </div>
+                                <div className="col-md-6 col-md-6 col-sm-6 col-6 text-left">
+                                  <h4>{i.taskName}</h4>
+                                </div>
+                                <div className="col-md-4 col-md-4 col-sm-4 col-4 text-right">
+                                  <button
+                                    className="trash-btn"
+                                    onClick={() => deleteTask(i)}
+                                  >
+                                    <i className="fa fa-trash-o"></i>
+                                  </button>
+                                </div>
+                              </div>
                             </div>
                           )}
                           {i.type === "Studying" && (
-                            <div className="planOutputTitle">
-                              <img
-                                src={study}
-                                width={30}
-                                height={30}
-                                style={{ float: "left" }}
-                              />
-                              <h4>{i.taskName}</h4>
-                              <button
-                                className="trash-btn textRight"
-                                onClick={() => deleteTask(i)}
-                              >
-                                <i className="fa fa-trash-o"></i>
-                              </button>
+                            <div className="container planOutputTitle">
+                              <div className="row">
+                                <div className="col-md-2 col-md-2 col-sm-2 col-2">
+                                  <img src={study} width={30} height={30} />
+                                </div>
+                                <div className="col-md-6 col-md-6 col-sm-6 col-6 text-left">
+                                  <h4>{i.taskName}</h4>
+                                </div>
+                                <div className="col-md-4 col-md-4 col-sm-4 col-4 text-right">
+                                  <button
+                                    className="trash-btn"
+                                    onClick={() => deleteTask(i)}
+                                  >
+                                    <i className="fa fa-trash-o"></i>
+                                  </button>
+                                </div>
+                              </div>
                             </div>
                           )}
                           {i.type === "None" && <h4>{i.taskName}</h4>}
@@ -335,7 +349,7 @@ function DailyPlanComponent() {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant="secondary" onClick={handlePreviewClose}>
             Close
           </Button>
           <Pdf targetRef={ref} filename="roadmap.pdf">
@@ -345,6 +359,24 @@ function DailyPlanComponent() {
               </Button>
             )}
           </Pdf>
+        </Modal.Footer>
+      </Modal>
+
+      {/* Confirm Modal Box */}
+      <Modal show={confirmBoxShow} onHide={handleConfirmBoxClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Warning Box</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Your data will not be saved! Are you sure to back home page?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleConfirmBoxClose}>
+            No
+          </Button>
+          <Link to="/">
+            <Button variant="primary">Yes, I will.</Button>
+          </Link>
         </Modal.Footer>
       </Modal>
     </>
