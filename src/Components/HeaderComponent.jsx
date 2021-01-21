@@ -10,13 +10,13 @@ function HeaderComponent() {
       <div className="container-fluid main-bar">
         <div className="row">
           <div className="col-md-4 col-4 text-right">
-            <Image src={logo} style={{ height: "auto", width: "25%" }} />
+            <Image src={logo} className="main-image" />
           </div>
           <div className="col-md-4 col-4 text-center">
             <h1 className="main-text">Life RoadMap</h1>
           </div>
           <div className="col-md-4 col-4">
-            <Image src={logo} style={{ height: "auto", width: "25%" }} />
+            <Image src={logo} className="main-image" />
           </div>
         </div>
       </div>

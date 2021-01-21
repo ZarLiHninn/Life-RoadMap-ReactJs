@@ -20,7 +20,7 @@ function CreatingPlanComponent() {
             </Link>
           </div>
           <div className="img-fluid col-md-6 col-6 text-center">
-            <img src={hand} className="hand-image-side" />
+            <img src={hand} className="hand-image-side" alt="" />
           </div>
         </div>
       </div>

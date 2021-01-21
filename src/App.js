@@ -1,6 +1,6 @@
 import { React } from "react";
-import { BrowserRouter, Route, Link } from "react-router-dom";
-import DailyPlanComponent from "./Components/DailyPlanComponent";
+import { BrowserRouter, Route} from "react-router-dom";
+import DailyTaskComponent from "./Components/DailyTaskComponent";
 import CreatingPlanComponent from "./Components/CreatingPlanComponent";
 import HeaderComponent from "./Components/HeaderComponent";
 
@@ -10,7 +10,7 @@ function App() {
       <HeaderComponent />
       <BrowserRouter>
         <Route path="/" exact component={CreatingPlanComponent} />
-        <Route path="/create/daily" component={DailyPlanComponent} />
+        <Route path="/create/daily" component={DailyTaskComponent} />
       </BrowserRouter>
     </>
   );

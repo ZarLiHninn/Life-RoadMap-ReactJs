@@ -18,11 +18,13 @@
     "react-date-picker": "^8.0.6",
     "react-datepicker": "^3.3.0",
     "react-dom": "^17.0.1",
+    "react-icons": "^4.1.0",
     "react-moment": "^1.1.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "react-time-picker": "^4.1.2",
     "react-to-pdf": "0.0.13",
+    "toastr": "^2.1.4",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
