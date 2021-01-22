@@ -174,8 +174,9 @@ function DailyTaskComponent() {
           </div>
           <div className="col-lg-4 col-md-4 col-5 text-right">
             <button
-              className="btn preview-btn"
+              className="btn preview-bFtn"
               onClick={() => setPreviewShow(true)}
+              disabled={dailyTask.length<1}
             >
               Preview
             </button>
