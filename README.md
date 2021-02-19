@@ -20,7 +20,7 @@
 ![alt tag](https://github.com/ZarLiHninn/Life-RoadMap-ReactJs/blob/master/images/main-page.png)
 
 ### タスク作成ページ
-- タスクを登録してくだいさい。
+- タスクを登録してください。
 - タスクが登録できたら、「Preview」ボタンをクリックして結果を見れます。
 - タスクがない場合は「Preview」ボタンは無効化ボタンであるのを注意してください。
 
